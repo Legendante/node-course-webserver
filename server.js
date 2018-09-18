@@ -6,7 +6,7 @@ var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
-app.use(express.static(__dirname + '/public'));
+
 app.use((req, res, next) => {
 	var now = new Date().toString();
 	var retStr = `${now}: ${req.method} ${req.url}`;
@@ -20,14 +20,14 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use((req, res, next) => {
-	res.render('maintenance.hbs', 
-	{
-		pageTitle: "Maintenance page",
-		welcomeMessage: "Welcome to Node JS server thingy"
-	});
-});
-
+// app.use((req, res, next) => {
+	// res.render('maintenance.hbs', 
+	// {
+		// pageTitle: "Maintenance page",
+		// welcomeMessage: "Welcome to Node JS server thingy"
+	// });
+// });
+app.use(express.static(__dirname + '/public'));
 
 hbs.registerHelper('getCurrentYear', () => {
 	return new Date().getFullYear();
@@ -60,6 +60,15 @@ app.get('/bad', (req, res) => {
 	code: 'Cause I said so'
 	});
 });
+
+app.get('/projects', (req, res) => {
+	// res.send('<h1>About Page</h1>');
+	res.render('projects.hbs', 
+	{
+		pageTitle: "Projects page"
+	});
+});
+
 
 app.listen(heroport, () => 
 {
